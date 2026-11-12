@@ -21,7 +21,6 @@ body {
     line-height: 1.6;
 }
 
-/* Navbar */
 .navbar {
     background-color: var(--bg-color);
     border-bottom: 1px solid var(--border-color);
@@ -58,7 +57,6 @@ body {
     color: var(--primary-color);
 }
 
-/* Container & Layout */
 .container {
     max-width: 900px;
     margin: 3rem auto;
@@ -79,7 +77,6 @@ body {
     color: var(--text-muted);
 }
 
-/* Drop Zone */
 .converter-box {
     background-color: var(--surface-color);
     border: 1px solid var(--border-color);
@@ -95,13 +92,15 @@ body {
     text-align: center;
     cursor: pointer;
     background-color: var(--bg-color);
-    transition: border-color 0.2s ease;
     margin-bottom: 1.5rem;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.drop-zone:hover, .drop-zone.dragover {
+.drop-zone.dragover {
+    transform: scale(1.02);
     border-color: var(--primary-hover);
     background-color: #EFF6FF;
+    box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.15);
 }
 
 .drop-zone svg {
@@ -113,7 +112,6 @@ body {
     color: var(--text-color);
 }
 
-/* Controls & Buttons */
 .controls {
     display: flex;
     justify-content: space-between;
@@ -151,7 +149,10 @@ select:focus {
     border: none;
     transition: background-color 0.2s ease, opacity 0.2s ease;
     text-decoration: none;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
     text-align: center;
 }
 
@@ -180,7 +181,6 @@ select:focus {
     background-color: var(--surface-color);
 }
 
-/* Preview Area */
 .preview-section h2 {
     font-size: 1.25rem;
     margin-bottom: 1rem;
@@ -200,6 +200,14 @@ select:focus {
     padding: 0.5rem;
     background-color: var(--surface-color);
     text-align: center;
+    opacity: 0;
+    animation: slideFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    transition: transform 0.2s ease;
+}
+
+.preview-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(24, 24, 27, 0.08);
 }
 
 .preview-item img {
@@ -222,7 +230,6 @@ select:focus {
     margin-top: 0.5rem;
 }
 
-/* Profile Page */
 .profile-card {
     background-color: var(--surface-color);
     border: 1px solid var(--border-color);
@@ -263,7 +270,59 @@ select:focus {
     gap: 1rem;
 }
 
-/* Responsive */
+@keyframes slideFadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(120%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideOutRight {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(120%); opacity: 0; }
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+    display: none;
+}
+
+.btn-primary.loading .spinner {
+    display: block;
+}
+
+.toast-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    z-index: 1000;
+}
+
+.toast {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    padding: 1rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 500;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    animation: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.toast.hiding {
+    animation: slideOutRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
 @media (max-width: 600px) {
     .controls {
         flex-direction: column;
